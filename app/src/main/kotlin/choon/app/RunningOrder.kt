@@ -36,7 +36,7 @@ class RunningOrder<T> {
     // and a higher-priority of requested tracks. But that doesn't work when you skip
     // backwards: which list is that track going back on to?
     // So we'll stick with a single list and use two cursors.
-    private val items: MutableList<T> = mutableListOf()
+    private val queue: MutableList<T> = mutableListOf()
     private var enqueueAt: Int = 0
 
     /**
@@ -45,37 +45,37 @@ class RunningOrder<T> {
      */
     fun replace(items: List<T>): Unit {
         // TODO: There's something to be said for just taking the list as-is.
-        this.items.clear()
-        this.items.addAll(items)
-        this.enqueueAt = 1
+        queue.clear()
+        queue.addAll(items)
+        enqueueAt = 1
     }
 
     /** Places the specified items at the tail of the running order. */
     fun append(items: List<T>): Unit {
-        if (this.items.isEmpty()) {
-            this.items.addAll(items)
-            this.enqueueAt = 1
+        if (queue.isEmpty()) {
+            queue.addAll(items)
+            enqueueAt = 1
         } else {
-            this.items.addAll(items)
+            queue.addAll(items)
         }
     }
 
     /** Inserts the specified items immediately after the currently-playing track. */
     fun insert(items: List<T>): Unit {
-        if (this.items.isEmpty()) {
-            this.items.addAll(items)
-            this.enqueueAt = 1
+        if (queue.isEmpty()) {
+            queue.addAll(items)
+            enqueueAt = 1
         } else {
-            this.items.addAll(1, items)
-            this.enqueueAt += items.size
+            queue.addAll(1, items)
+            enqueueAt += items.size
         }
     }
 
     /** Inserts the specified items immediately after the tail-most inserted or enqueued item. */
     fun enqueue(items: List<T>): Unit {
-        this.items.addAll(enqueueAt, items)
-        this.enqueueAt += items.size
+        queue.addAll(enqueueAt, items)
+        enqueueAt += items.size
     }
 
-    fun toList(): List<T> = items.toList()
+    fun toList(): List<T> = queue.toList()
 }
