@@ -4,6 +4,7 @@
 
 plugins {
     id 'choon.kotlin-application-conventions'
+    id 'com.adarshr.test-logger' version '3.0.0'
 }
 
 dependencies {
