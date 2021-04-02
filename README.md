@@ -23,3 +23,13 @@ all existing music players that aren't the empeg suck.
     I've no idea how to fit the touchscreen to my car.
 
 So there's going to be a lot of learning to be done.
+
+## Building it
+
+This project uses Gradle.
+
+```bash
+gradle build
+gradle run
+gradle test
+```
